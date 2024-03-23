@@ -48,7 +48,13 @@
             <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
         </form>
     </div>
-
+    {% if request.GET.q %}
+    <h3 class"mt-4">Результаты поиска по запросу {{request.GET.q}}</h3>
+    {% if not goods %}
+       <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+        <h2 class="mt-4"> По запросу ничего не найдено</h2>
+    {% endif %}
+    {% endif %}
     {% for product in goods %}
      <!-- Карта товара -->
     <div class="col-lg-4 col-md-6 p-4">
@@ -61,9 +67,25 @@
             
             <div class="card-body">
                 <a href="{% url "catalog:product" product.slug %}">
-                    <p class="card-title">{{product.name}}</p>
+                    <p class="card-title"> 
+                        {% autoescape off %}
+                        {% if product.headline %} 
+                        {{product.headline}}
+                        {% else %}
+                        {{product.name}}
+                        {% endif %}
+                        {% endautoescape %}
+                    </p>
                 </a>
-                <p class="card-text">{{product.description|truncatechars:60}}</p>
+                <p class="card-text">
+                    {% autoescape off %}
+                    {% if product.bodyline %} 
+                    {{product.bodyline|truncatechars:60}}
+                    {% else %}
+                    {{product.description|truncatechars:60}}
+                    {% endif %}
+                    {% endautoescape %}
+                </p>
                 <p class="product_id">id:{{ product.display_id }}</p>
                 <div class="d-flex justify-content-between">
                     {% if product.discount %}
