@@ -25,7 +25,7 @@ class Products(models.Model):
     image = models.ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Изображение')
     price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена')
     discount = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Скидка в процентах')
-    quantite = models.PositiveIntegerField(default=0, verbose_name='Количество')
+    quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name='Категория')
 
     class Meta:
@@ -35,7 +35,7 @@ class Products(models.Model):
         ordering = ("id",)
 
     def __str__(self):
-        return f'{self.name} Количество - {self.quantite}'
+        return f'{self.name} Количество - {self.quantity}'
     
     def display_id(self):
         return f'{self.id:05}'
