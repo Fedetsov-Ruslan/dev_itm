@@ -10,7 +10,7 @@
             <!-- Разметка корзины -->
             {% user_carts request as carts %}
             
-            {% include "carts/includes/included_cart" %}
+            {% include "carts/includes/included_cart.html" %}
             <!-- Закончилась разметка корзины -->
         </div>
     </div>
@@ -28,7 +28,7 @@
                                 value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}"
                                 name="first_name" required>
                                 {% if form.first_name.errors %}
-                                <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
                                 {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
@@ -37,17 +37,17 @@
                             value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}"
                             required>
                             {% if form.last_name.errors %}
-                            <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
                             {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="id_phone_number" class="form-label">Номер телефона*:</label>
                             <input type="text" class="form-control" id="id_phone_number" name="phone_number"
-                            value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}"
+                                value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}"
                                 placeholder="В формате: XXX-XXX-XX-XX"
                                 required>
                                 {% if form.phone_number.errors %}
-                                <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
                                 {% endif %}
                         </div>
                         <div class="col-md-12 mb-3">
@@ -71,22 +71,25 @@
                                 value="{% if form.delivery_address.value %}{{form.delivery_address.value}}{% endif %}"
                                 name="delivery_address" rows="2"></textarea>
                                 {% if form.delivery_address.errors %}
-                                <div class="alert alert-danger alert-dismissible fade show">{{form.delivery_address.errors}}</div>
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.delivery_address.errors}}</div>
                                 {% endif %}
                         </div>
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Способ оплаты: </label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="payment_on_get"
-                                    id="id_payment_on_get" value="0" checked>
+                                    id="id_payment_on_get" value="1" checked>
                                 <label class="form-check-label" for="id_payment_on_get">Оплата
                                     картой</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="payment_on_get"
-                                    id="id_payment_on_get" value="1">
+                                    id="id_payment_on_get" value="0">
                                 <label class="form-check-label" for="id_payment_on_get">Наличными/картой
                                     при плучении</label>
+                                {% if form.payment_on_get.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.payment_on_get.errors}}</div>
+                                {% endif %}                          
                             </div>
                         </div>
                     </div>
