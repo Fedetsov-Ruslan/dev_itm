@@ -5,8 +5,10 @@ from django.shortcuts import redirect, render
 from django.template import context
 from django.urls import reverse
 from traitlets import Instance
+from django.db.models import Prefetch
 
 from carts.models import Cart
+from orders.models import Order, OrderItem
 from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
 
 def login(request):
@@ -76,9 +78,19 @@ def profile(request):
     else:
         form = ProfileForm(instance=request.user)
 
+    orders = (
+        Order.objects.filter(user=request.user).prefetch_related(Prefetch(
+                                                                    "orderitem_set",
+                                                                    queryset=OrderItem.objects.select_related("product")
+                                                                )
+        )
+        .order_by("-id")
+    )
+
     context = {
         'title': 'Home - Кабинет',
-        'form': form
+        'form': form,
+        'oreders': orders
     }
     return render(request, 'users/profile.html', context)
 
